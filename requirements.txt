@@ -4,3 +4,9 @@ sentence-transformers
 faiss-cpu
 pypdf
 ollama
+langchain-huggingface
+langchain-ollama
+flask
+flask-cors
+langchain-openai
+python-dotenv

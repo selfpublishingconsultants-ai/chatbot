@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Self Publishing Consultant - Intelligent Assistant</title>
+    <title>Self Publishing Consultant - Chat Assistant</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght=0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* Color Palette & Custom Properties */
         :root {
@@ -50,241 +50,34 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
+            padding: 0;
+            overflow: hidden;
         }
 
-        /* Container Layout */
-        .dashboard-container {
+        /* Container Layout - Simplified for Widget */
+        .widget-container {
             width: 100%;
-            max-width: 1100px;
-            height: 780px;
-            max-height: calc(100vh - 40px);
+            height: 100vh;
             background: var(--bg-surface);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
-            display: grid;
-            grid-template-columns: 380px 1fr;
+            border: none;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            transition: var(--transition);
         }
 
-        /* Mobile View Navigation Tabs */
-        .mobile-tabs {
-            display: none;
-            background: var(--bg-sidebar);
-            border-bottom: 1px solid var(--border);
-            grid-template-columns: 1fr 1fr;
-            text-align: center;
-        }
-
-        .mobile-tab-btn {
-            padding: 15px;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .mobile-tab-btn.active {
-            color: var(--primary-light);
-            border-bottom-color: var(--primary);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        /* Sidebar - Brand & Stats Panel */
-        .sidebar {
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            padding: 30px;
-            overflow-y: auto;
-            justify-content: space-between;
-            min-height: 0;
-        }
-
-        .brand-section {
-            margin-bottom: 25px;
-        }
-
-        .brand-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .brand-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, #78350f 100%);
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            box-shadow: 0 0 15px var(--primary-glow);
-        }
-
-        .brand-name {
-            font-family: var(--font-serif);
-            font-size: 21px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            background: linear-gradient(to right, #ffffff, #fbbf24);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-tagline {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-style: italic;
-            border-left: 2px solid var(--primary);
-            padding-left: 10px;
-            line-height: 1.4;
-        }
-
-        /* Metrics Grid */
-        .metrics-section {
-            margin-bottom: 25px;
-        }
-
-        .section-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .metric-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px;
-            transition: var(--transition);
-        }
-
-        .metric-card:hover {
-            border-color: var(--border-glow);
-            background: var(--bg-card-hover);
-            transform: translateY(-2px);
-        }
-
-        .metric-val {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-light);
-            margin-bottom: 2px;
-        }
-
-        .metric-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            line-height: 1.2;
-        }
-
-        /* Service Chips */
-        .services-section {
-            margin-bottom: 25px;
-        }
-
-        .chips-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .service-chip {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .service-chip:hover {
-            background: var(--primary-glow);
-            border-color: var(--primary);
-            color: var(--primary-light);
-            transform: scale(1.03);
-        }
-
-        /* Sidebar Footer (Trust & Contact) */
-        .sidebar-footer {
-            border-top: 1px solid var(--border);
-            padding-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .trust-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(16, 185, 129, 0.05);
-            border: 1px solid rgba(16, 185, 129, 0.15);
-            padding: 8px 12px;
-            border-radius: 8px;
-        }
-
-        .trust-stars {
-            color: #fbbf24;
-            display: flex;
-            font-size: 12px;
-        }
-
-        .trust-text {
-            font-size: 12px;
-            font-weight: 600;
-            color: #34d399;
-        }
-
-        .contact-info {
-            font-size: 11px;
-            color: var(--text-muted);
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        /* Chat Panel Layout */
+        /* Chat Panel */
         .chat-panel {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            min-height: 0;
-            background: rgba(10, 15, 26, 0.4);
+            background: rgba(15, 23, 42, 0.2);
             position: relative;
         }
 
         .chat-header {
-            padding: 20px 25px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -304,24 +97,19 @@
             background: var(--success);
             border-radius: 50%;
             box-shadow: 0 0 8px var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
         .header-title {
-            font-family: var(--font-serif);
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.2px;
         }
 
         .header-subtitle {
             font-size: 11px;
             color: var(--text-muted);
+            display: block;
         }
 
         .reset-session-btn {
@@ -339,40 +127,21 @@
         }
 
         .reset-session-btn:hover {
-            color: var(--primary-light);
             border-color: var(--primary);
+            color: var(--primary-light);
             background: var(--primary-glow);
         }
 
-        /* Messages Area */
+        /* Chat Messages area */
         .chat-messages {
             flex: 1;
             min-height: 0;
+            padding: 20px;
             overflow-y: auto;
-            padding: 25px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             scroll-behavior: smooth;
-        }
-
-        /* Custom Scrollbar */
-        .chat-messages::-webkit-scrollbar,
-        .sidebar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .chat-messages::-webkit-scrollbar-track,
-        .sidebar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .chat-messages::-webkit-scrollbar-thumb,
-        .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb:hover,
-        .sidebar::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
         }
 
         /* Message Bubbles */
@@ -380,103 +149,105 @@
             display: flex;
             gap: 12px;
             max-width: 85%;
-            animation: bubbleIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: messageFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes bubbleIn {
-            from { opacity: 0; transform: translateY(12px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes messageFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .message.user-message {
+        .user-message {
             align-self: flex-end;
             flex-direction: row-reverse;
         }
 
-        .message.bot-message {
+        .bot-message {
             align-self: flex-start;
         }
 
         .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .bot-message .avatar {
-            background: var(--bg-sidebar);
-            border: 1px solid var(--border-glow);
-            color: var(--primary-light);
         }
 
         .user-message .avatar {
-            background: linear-gradient(135deg, var(--primary) 0%, #92400e 100%);
+            background: var(--accent);
+            color: var(--text-dark);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+        }
+
+        .bot-message .avatar {
+            background: var(--primary);
             color: white;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
 
         .bubble {
-            padding: 14px 18px;
+            padding: 12px 16px;
             border-radius: 16px;
-            font-size: 14px;
-            line-height: 1.6;
-            word-wrap: break-word;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .bot-message .bubble {
-            background: rgba(30, 41, 59, 0.55);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            border-top-left-radius: 4px;
+            font-size: 13.5px;
+            line-height: 1.5;
         }
 
         .user-message .bubble {
-            background: linear-gradient(135deg, var(--primary) 0%, #b45309 100%);
-            color: white;
-            border-top-right-radius: 4px;
+            background: var(--accent);
+            color: var(--text-dark);
+            border-bottom-right-radius: 4px;
+            font-weight: 500;
         }
 
-        /* Format support in bubble responses */
-        .bubble hr {
-            border: 0;
-            border-top: 1px solid var(--border);
-            margin: 10px 0;
+        .bot-message .bubble {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-top-left-radius: 4px;
         }
-        .bubble ul, .bubble ol {
-            margin-left: 20px;
-            margin-top: 5px;
-            margin-bottom: 5px;
+
+        /* HTML format inside bubbles */
+        .bubble strong {
+            color: var(--primary-light);
+            font-weight: 600;
         }
+
+        .user-message .bubble strong {
+            color: inherit;
+            font-weight: 700;
+        }
+
+        .bubble ul {
+            margin-left: 15px;
+            margin-top: 8px;
+        }
+
         .bubble li {
             margin-bottom: 4px;
         }
 
-        /* Typing Indicator */
+        /* Typing Indicator Bubble */
         .typing-indicator-container {
             display: none;
             align-self: flex-start;
-            margin-left: 25px;
-            margin-bottom: 15px;
-            animation: fadeIn 0.3s ease;
+            gap: 12px;
+            padding-left: 20px;
+            margin-bottom: 10px;
         }
 
         .typing-indicator-container.active {
             display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .typing-bubble {
-            background: rgba(30, 41, 59, 0.45);
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: 16px;
             border-top-left-radius: 4px;
             display: flex;
@@ -485,32 +256,32 @@
         }
 
         .typing-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             background: var(--text-muted);
             border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
+            animation: wave 1.2s infinite ease-in-out;
         }
 
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
+        @keyframes wave {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
         }
 
-        /* Suggestions Row */
+        /* Suggestions chips */
         .suggestions-row {
+            padding: 0 20px 10px 20px;
             display: flex;
             gap: 8px;
-            padding: 0 25px 12px 25px;
             overflow-x: auto;
-            flex-wrap: nowrap;
+            scrollbar-width: none; /* Firefox */
         }
 
         .suggestions-row::-webkit-scrollbar {
-            height: 0px;
+            display: none; /* Safari/Chrome */
         }
 
         .suggestion-btn {
@@ -518,42 +289,41 @@
             border: 1px solid var(--border);
             color: var(--text-muted);
             padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 12px;
+            border-radius: 16px;
+            font-size: 11px;
             cursor: pointer;
             white-space: nowrap;
             transition: var(--transition);
         }
 
         .suggestion-btn:hover {
-            border-color: var(--primary);
+            border-color: var(--primary-glow);
             color: var(--primary-light);
             background: var(--primary-glow);
         }
 
         /* Input Container */
         .chat-input-container {
-            padding: 18px 25px 25px 25px;
+            padding: 12px 20px;
             border-top: 1px solid var(--border);
-            background: rgba(15, 23, 42, 0.4);
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
+            background: rgba(15, 23, 42, 0.4);
         }
 
         .input-wrapper {
-            position: relative;
             flex: 1;
         }
 
         .chat-input {
             width: 100%;
-            padding: 14px 20px;
+            padding: 12px 16px;
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 12px;
             color: var(--text-main);
-            font-size: 14px;
+            font-size: 13.5px;
             outline: none;
             transition: var(--transition);
         }
@@ -564,11 +334,11 @@
         }
 
         .send-btn {
-            width: 48px;
-            height: 48px;
+            width: 42px;
+            height: 42px;
             background: linear-gradient(135deg, var(--primary) 0%, #b45309 100%);
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -589,12 +359,12 @@
         }
 
         .send-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             fill: currentColor;
         }
 
-        /* Lead Form Slide-in / Modal overlay */
+        /* Lead Form overlay */
         .lead-form-overlay {
             position: absolute;
             top: 0;
@@ -623,10 +393,10 @@
         .lead-card {
             background: var(--bg-sidebar);
             border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 24px;
             width: 100%;
-            max-width: 440px;
+            max-width: 360px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             animation: cardSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -638,39 +408,40 @@
 
         .lead-card h3 {
             font-family: var(--font-serif);
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 6px;
             color: var(--text-main);
         }
 
         .lead-card p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            line-height: 1.4;
         }
 
         .input-group {
             position: relative;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .input-group svg {
             position: absolute;
-            left: 14px;
-            top: 14px;
-            width: 16px;
-            height: 16px;
+            left: 12px;
+            top: 12px;
+            width: 14px;
+            height: 14px;
             color: var(--text-muted);
         }
 
         .lead-card input {
             width: 100%;
-            padding: 13px 15px 13px 42px;
+            padding: 10px 12px 10px 36px;
             background: rgba(15, 23, 42, 0.9);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-main);
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
             transition: var(--transition);
         }
@@ -687,8 +458,8 @@
 
         .form-error-messages {
             color: var(--error);
-            font-size: 12px;
-            margin-bottom: 12px;
+            font-size: 11px;
+            margin-bottom: 10px;
             line-height: 1.4;
         }
 
@@ -703,10 +474,10 @@
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-muted);
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 13px;
             transition: var(--transition);
         }
 
@@ -719,10 +490,10 @@
             background: linear-gradient(135deg, var(--primary) 0%, #b45309 100%);
             border: none;
             color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 10px 16px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
@@ -742,135 +513,10 @@
             transform: none;
             box-shadow: none;
         }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 900px) {
-            body {
-                padding: 10px;
-            }
-
-            .dashboard-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
-                height: 100vh;
-                max-height: calc(100vh - 20px);
-                border-radius: 16px;
-            }
-
-            .mobile-tabs {
-                display: grid;
-            }
-
-            .sidebar {
-                display: none; /* Toggled via script */
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-                overflow-y: auto;
-            }
-
-            .sidebar.active {
-                display: flex;
-                height: 100%;
-            }
-
-            .chat-panel {
-                display: flex;
-            }
-
-            .chat-panel.hidden {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Mobile Navigation Tabs -->
-        <div class="mobile-tabs">
-            <div class="mobile-tab-btn active" id="tabChat" onclick="switchMobileTab('chat')">Chat Assistant</div>
-            <div class="mobile-tab-btn" id="tabInfo" onclick="switchMobileTab('info')">Services & Stats</div>
-        </div>
-
-        <!-- Sidebar Panel (Brand, Metrics, Service Inquiries) -->
-        <div class="sidebar" id="sidebarPanel">
-            <div>
-                <!-- Brand Header -->
-                <div class="brand-section">
-                    <div class="brand-header">
-                        <div class="brand-logo">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                        </div>
-                        <h1 class="brand-name">Self Publishing</h1>
-                    </div>
-                    <div style="font-family: var(--font-serif); font-size: 16px; margin-top: -10px; margin-bottom: 12px; font-weight: 500; color: #fbbf24;">Consultant</div>
-                    <p class="brand-tagline">"From Manuscript to Global Bookshelf"</p>
-                </div>
-
-                <!-- Metrics Grid -->
-                <div class="metrics-section">
-                    <h2 class="section-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
-                        Performance Metrics
-                    </h2>
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-val">4.8x</div>
-                            <div class="metric-label">Avg Marketing ROAS</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-val">40k+</div>
-                            <div class="metric-label">Retail Outlets</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-val">180+</div>
-                            <div class="metric-label">Countries Reached</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-val">100%</div>
-                            <div class="metric-label">Rights Retained</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Services Quick Queries -->
-                <div class="services-section">
-                    <h2 class="section-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Inquire About Services
-                    </h2>
-                    <div class="chips-container">
-                        <div class="service-chip" onclick="clickServiceChip('Manuscript Assessment')">Manuscript Assessment</div>
-                        <div class="service-chip" onclick="clickServiceChip('Developmental Editing')">Developmental Editing</div>
-                        <div class="service-chip" onclick="clickServiceChip('Cover Design')">Cover Design</div>
-                        <div class="service-chip" onclick="clickServiceChip('Formatting')">Professional Formatting</div>
-                        <div class="service-chip" onclick="clickServiceChip('Global Distribution')">Global Distribution</div>
-                        <div class="service-chip" onclick="clickServiceChip('Book Marketing')">Book Marketing</div>
-                        <div class="service-chip" onclick="clickServiceChip('Royalty Accounting')">Royalty Tracking</div>
-                        <div class="service-chip" onclick="clickServiceChip('Ghostwriting')">Ghostwriting</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer Section -->
-            <div class="sidebar-footer">
-                <div class="trust-badge">
-                    <div class="trust-stars">★ ★ ★ ★ ★</div>
-                    <div class="trust-text">4.9/5 Trustpilot</div>
-                </div>
-                <div class="contact-info">
-                    <span>📞 UK/WhatsApp: +44 7922 656521</span>
-                    <span>✉️ selfpublishingconsultants@gmail.com</span>
-                    <span>📍 SF Head Office: 100 Innovation Drive</span>
-                </div>
-            </div>
-        </div>
-
+    <div class="widget-container">
         <!-- Chat Panel (Conversation Area) -->
         <div class="chat-panel" id="chatPanel">
             <!-- Header -->
@@ -879,12 +525,12 @@
                     <div class="status-dot"></div>
                     <div>
                         <h2 class="header-title">Consultation Assistant</h2>
-                        <span class="header-subtitle">Expert self-publishing advice</span>
+                        <span class="header-subtitle">Self Publishing Consultant</span>
                     </div>
                 </div>
                 <!-- Reset Conversation -->
                 <button class="reset-session-btn" title="Reset Conversation" onclick="confirmReset()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
                 </button>
@@ -898,7 +544,7 @@
                     <div class="bubble">
                         Hello! Welcome to <strong>Self Publishing Consultant</strong>. I am here to help guide you on your journey from manuscript to global bookshelf. 
                         <br><br>
-                        Whether you need information about developmental editing, cover design, professional KDP formatting, global distribution strategies, or book launch marketing, feel free to ask me anything!
+                        Whether you need information about manuscript assessment, cover design, professional layout and formatting, global distribution, or launch marketing, feel free to ask me anything!
                     </div>
                 </div>
             </div>
@@ -916,7 +562,7 @@
             <!-- Suggestion Chips Row -->
             <div class="suggestions-row" id="suggestionsRow">
                 <button class="suggestion-btn" onclick="askSuggestion('How do I keep 100% of my rights?')">Do I keep 100% of my rights?</button>
-                <button class="suggestion-btn" onclick="askSuggestion('What publishing packages do you offer?')">What packages do you offer?</button>
+                <button class="suggestion-btn" onclick="askSuggestion('How does your pricing work?')">How does pricing work?</button>
                 <button class="suggestion-btn" onclick="askSuggestion('How long does distribution take?')">How long does distribution take?</button>
             </div>
 
@@ -927,7 +573,7 @@
                     <p>Provide your contact details, and one of our Senior Publishing Consultants will follow up with you within 24 hours.</p>
                     
                     <!-- Detected services interest tags -->
-                    <div id="interestTags" style="display:none;margin-bottom:14px;padding:10px 12px;background:rgba(217,119,6,0.07);border:1px solid rgba(217,119,6,0.25);border-radius:10px;"></div>
+                    <div id="interestTags" style="display:none;margin-bottom:12px;padding:8px 10px;background:rgba(217,119,6,0.07);border:1px solid rgba(217,119,6,0.25);border-radius:8px;"></div>
 
                     <div id="formErrors" class="form-error-messages"></div>
                     
@@ -966,7 +612,7 @@
                         type="text" 
                         class="chat-input" 
                         id="chatInput" 
-                        placeholder="Ask about publishing packages, editing, design..."
+                        placeholder="Ask about editing, cover design, distribution..."
                         onkeypress="handleKeyPress(event)"
                     >
                 </div>
@@ -980,22 +626,20 @@
     </div>
 
     <script>
-        // Configuration
+        // Configuration - dynamically fetches the server base origin (no hardcoding)
         const CONFIG = {
             API_BASE_URL: window.location.origin,
-            SESSION_STORAGE_KEY: 'spc_session_id'
+            SESSION_STORAGE_KEY: 'spc_widget_session_id'
         };
         
         // Retrieve or generate unique session ID
         let sessionId = localStorage.getItem(CONFIG.SESSION_STORAGE_KEY);
         if (!sessionId) {
-            sessionId = 'spc_session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionId = 'spc_wsession_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             localStorage.setItem(CONFIG.SESSION_STORAGE_KEY, sessionId);
         }
         
         let isSubmitting = false;
-
-        // Track services the user showed interest in during the chat
         let detectedInterests = new Set();
 
         function updateInterestTags(interestsList) {
@@ -1005,30 +649,10 @@
             if (!tagsDiv) return;
             if (detectedInterests.size > 0) {
                 tagsDiv.style.display = 'block';
-                tagsDiv.innerHTML = '<span style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:6px;">Interested services detected from your conversation:</span>'
+                tagsDiv.innerHTML = '<span style="font-size:10px;color:var(--text-muted);display:block;margin-bottom:4px;">Interested services:</span>'
                     + [...detectedInterests].map(s =>
-                        `<span style="display:inline-block;background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.4);color:#fbbf24;border-radius:20px;padding:3px 10px;font-size:11px;margin:2px;font-weight:600;">${s}</span>`
+                        `<span style="display:inline-block;background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.4);color:#fbbf24;border-radius:20px;padding:2px 8px;font-size:10px;margin:2px;font-weight:600;">${s}</span>`
                     ).join('');
-            }
-        }
-
-        // Mobile Tabs Switching Logic
-        function switchMobileTab(tab) {
-            const chatPanel = document.getElementById('chatPanel');
-            const sidebarPanel = document.getElementById('sidebarPanel');
-            const tabChat = document.getElementById('tabChat');
-            const tabInfo = document.getElementById('tabInfo');
-
-            if (tab === 'chat') {
-                chatPanel.classList.remove('hidden');
-                sidebarPanel.classList.remove('active');
-                tabChat.classList.add('active');
-                tabInfo.classList.remove('active');
-            } else {
-                chatPanel.classList.add('hidden');
-                sidebarPanel.classList.add('active');
-                tabChat.classList.remove('active');
-                tabInfo.classList.add('active');
             }
         }
 
@@ -1039,18 +663,9 @@
             }
         }
 
-        // Suggestions/Chips helper
         function askSuggestion(text) {
             document.getElementById('chatInput').value = text;
             sendMessage();
-        }
-
-        function clickServiceChip(serviceName) {
-            // Switch back to chat tab automatically on mobile when a chip is clicked
-            if (window.innerWidth <= 900) {
-                switchMobileTab('chat');
-            }
-            askSuggestion(`Tell me about your ${serviceName} services`);
         }
         
         async function sendMessage() {
@@ -1085,22 +700,18 @@
                 const data = await response.json();
                 hideTypingIndicator();
                 
-                // Add response message to UI
                 if (data.answer && data.answer !== 'undefined') {
                     addMessage(data.answer, 'bot');
                 }
 
-                // Track interests returned from server
                 if (data.interests && data.interests.length > 0) {
                     updateInterestTags(data.interests);
                 }
 
-                // Extract interests from the bot reply itself (service names mentioned)
                 if (data.answer) {
                     extractInterestsFromText(data.answer);
                 }
                 
-                // Show lead form if requested
                 if (data.lead_required === true) {
                     showLeadForm();
                 }
@@ -1108,7 +719,7 @@
             } catch (error) {
                 console.error('Error:', error);
                 hideTypingIndicator();
-                addMessage('Sorry, I encountered a connection issue. Please make sure the backend server is running and try again.', 'bot');
+                addMessage('Sorry, I encountered a connection issue. Please try again.', 'bot');
             }
         }
         
@@ -1124,14 +735,10 @@
             const bubbleDiv = document.createElement('div');
             bubbleDiv.className = 'bubble';
             
-            // Basic markdown-like parser for formatting bullet points and bold tags
             let formattedText = text.replace(/\n/g, '<br>');
-            // Bold elements **text** or __text__
             formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            // Lines starting with dashes converted to list items
             if (formattedText.includes('<br>- ')) {
                 formattedText = formattedText.replace(/<br>- (.*?)(?=<br>|$)/g, '<li>$1</li>');
-                // Wrap group of list items in a ul tag (simple regex match)
                 formattedText = formattedText.replace(/(<li>.*?<\/li>)/g, '<ul>$1</ul>');
             }
             
@@ -1140,8 +747,6 @@
             messageDiv.appendChild(avatarDiv);
             messageDiv.appendChild(bubbleDiv);
             messagesDiv.appendChild(messageDiv);
-            
-            // Scroll to bottom
             scrollToBottom();
         }
 
@@ -1185,7 +790,6 @@
         function clearErrors() {
             const errorDiv = document.getElementById('formErrors');
             errorDiv.innerHTML = '';
-            
             const inputs = document.querySelectorAll('.lead-card input');
             inputs.forEach(input => input.classList.remove('error'));
         }
@@ -1212,11 +816,9 @@
             const phone = document.getElementById('leadPhone').value.trim();
             
             const errors = [];
-            
             if (!name || name.length < 2) {
                 errors.push('Please enter your full name (minimum 2 characters)');
             }
-            
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const emailValid = email && emailRegex.test(email);
             
@@ -1226,13 +828,11 @@
             if (!emailValid && !phoneValid) {
                 errors.push('Please provide a valid email address or phone number.');
             }
-            
             return errors;
         }
         
         async function submitLead() {
             if (isSubmitting) return;
-            
             clearErrors();
             
             const errors = validateForm();
@@ -1247,7 +847,7 @@
             
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending Details...';
+            submitBtn.textContent = 'Sending...';
             isSubmitting = true;
             
             try {
@@ -1266,7 +866,6 @@
                 });
                 
                 const data = await response.json();
-                
                 if (data.success) {
                     hideLeadForm();
                     clearForm();
@@ -1274,10 +873,9 @@
                 } else if (data.errors) {
                     showErrors(data.errors);
                 }
-                
             } catch (error) {
                 console.error('Error submitting details:', error);
-                showErrors(['Connection lost. Please check your network and try again.']);
+                showErrors(['Connection lost. Please try again.']);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Submit Details';
@@ -1289,13 +887,11 @@
             document.getElementById('leadName').value = '';
             document.getElementById('leadEmail').value = '';
             document.getElementById('leadPhone').value = '';
-            // Reset interests UI on form clear
             const tagsDiv = document.getElementById('interestTags');
             if (tagsDiv) tagsDiv.style.display = 'none';
             detectedInterests.clear();
         }
 
-        // Extract service interests from bot response text
         function extractInterestsFromText(text) {
             const serviceMap = {
                 'Manuscript Assessment': ['manuscript assessment'],
@@ -1336,7 +932,6 @@
                         })
                     });
                     
-                    // Clear messages container in UI except welcome message
                     const messagesDiv = document.getElementById('chatMessages');
                     messagesDiv.innerHTML = `
                         <div class="message bot-message">
@@ -1344,7 +939,7 @@
                             <div class="bubble">
                                 Hello! Welcome to <strong>Self Publishing Consultant</strong>. I am here to help guide you on your journey from manuscript to global bookshelf. 
                                 <br><br>
-                                Whether you need information about developmental editing, cover design, professional KDP formatting, global distribution strategies, or book launch marketing, feel free to ask me anything!
+                                Whether you need information about manuscript assessment, cover design, professional layout and formatting, global distribution, or launch marketing, feel free to ask me anything!
                             </div>
                         </div>
                     `;
@@ -1354,7 +949,6 @@
             }
         }
         
-        // Autofocus input on load
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('chatInput').focus();
         });

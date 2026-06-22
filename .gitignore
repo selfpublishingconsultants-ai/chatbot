@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Database and Leads
+leads.db
+leads/
+
+# IDEs
+.vscode/
+.idea/
