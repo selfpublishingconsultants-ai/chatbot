@@ -11,28 +11,28 @@
     <style>
         /* Color Palette & Custom Properties */
         :root {
-            --bg-page: #0b0f19;
-            --bg-surface: rgba(15, 23, 42, 0.7);
-            --bg-sidebar: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.4);
-            --bg-card-hover: rgba(30, 41, 59, 0.7);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-glow: rgba(217, 119, 6, 0.3);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-dark: #0f172a;
+            --bg-page: #f8fafc;
+            --bg-surface: rgba(255, 255, 255, 0.95);
+            --bg-sidebar: #ffffff;
+            --bg-card: rgba(255, 255, 255, 1);
+            --bg-card-hover: rgba(240, 253, 250, 0.8);
+            --border: rgba(13, 148, 136, 0.15);
+            --border-glow: rgba(13, 148, 136, 0.3);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --text-dark: #064e3b;
             
-            --primary: #d97706; /* Amber Gold */
-            --primary-light: #fbbf24;
-            --primary-glow: rgba(217, 119, 6, 0.15);
-            --accent: #38bdf8; /* Soft blue */
+            --primary: #064e3b;
+            --primary-light: #0d9488;
+            --primary-glow: rgba(13, 148, 136, 0.15);
+            --accent: #059669;
             --success: #10b981;
             --error: #ef4444;
 
             --font-serif: 'Lora', serif;
             --font-sans: 'Plus Jakarta Sans', sans-serif;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
         }
 
         /* Reset & Base Styles */
@@ -44,7 +44,7 @@
 
         body {
             font-family: var(--font-sans);
-            background: radial-gradient(circle at top right, #1e1b4b, var(--bg-page) 65%);
+            background: radial-gradient(circle at top right, #ccfbf1, var(--bg-page) 65%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -123,7 +123,7 @@
         .brand-logo {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, #78350f 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             border-radius: 10px;
             display: flex;
             justify-content: center;
@@ -137,7 +137,7 @@
             font-size: 21px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            background: linear-gradient(to right, #ffffff, #fbbf24);
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -279,7 +279,7 @@
             flex-direction: column;
             height: 100%;
             min-height: 0;
-            background: rgba(10, 15, 26, 0.4);
+            background: rgba(255, 255, 255, 0.5);
             position: relative;
         }
 
@@ -289,7 +289,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .header-title-container {
@@ -417,7 +417,7 @@
         }
 
         .user-message .avatar {
-            background: linear-gradient(135deg, var(--primary) 0%, #92400e 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
         }
 
@@ -431,14 +431,14 @@
         }
 
         .bot-message .bubble {
-            background: rgba(30, 41, 59, 0.55);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-main);
             border-top-left-radius: 4px;
         }
 
         .user-message .bubble {
-            background: linear-gradient(135deg, var(--primary) 0%, #b45309 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             border-top-right-radius: 4px;
         }
@@ -474,7 +474,7 @@
         }
 
         .typing-bubble {
-            background: rgba(30, 41, 59, 0.45);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             padding: 10px 16px;
             border-radius: 16px;
@@ -535,7 +535,7 @@
         .chat-input-container {
             padding: 18px 25px 25px 25px;
             border-top: 1px solid var(--border);
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(255, 255, 255, 0.8);
             display: flex;
             gap: 12px;
             align-items: center;
@@ -549,7 +549,7 @@
         .chat-input {
             width: 100%;
             padding: 14px 20px;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(248, 250, 252, 0.8);
             border: 1px solid var(--border);
             border-radius: 14px;
             color: var(--text-main);
@@ -566,7 +566,7 @@
         .send-btn {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--primary) 0%, #b45309 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             border: none;
             border-radius: 14px;
             display: flex;

@@ -15,6 +15,7 @@ import os
 import glob
 import requests
 import sqlite3
+import threading
 from datetime import datetime
 from dotenv import load_dotenv
 from collections import defaultdict
@@ -98,7 +99,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 # -------------------------
 # LLM setup - Support Ollama and Groq (OpenAI-compatible)
 # -------------------------
-llm_provider = os.getenv("LLM_PROVIDER", "ollama").lower()
+llm_provider = os.getenv("LLM_PROVIDER", "groq").lower()
 
 if llm_provider == "groq":
     print("[INFO] Initializing ChatOpenAI client for Groq...")
@@ -106,7 +107,8 @@ if llm_provider == "groq":
         openai_api_base=os.getenv("GROQ_API_BASE", "https://api.groq.com/openai/v1"),
         openai_api_key=os.getenv("GROQ_API_KEY"),
         model_name=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
-        temperature=0.7
+        temperature=0.7,
+        model_kwargs={"response_format": {"type": "json_object"}}
     )
 else:
     print("[INFO] Initializing OllamaLLM client...")
@@ -273,6 +275,28 @@ def extract_interests_from_message(question):
     return interests
 
 # -------------------------
+# Webhook Helper
+# -------------------------
+def send_to_webhook(name, email, phone):
+    webhook_url = os.getenv("WEBHOOK_URL")
+    if not webhook_url:
+        return
+        
+    payload = {
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "form_type": "Contact Form",
+        "name": name,
+        "email": email,
+        "phone": phone
+    }
+    
+    try:
+        requests.post(webhook_url, json=payload, timeout=5)
+        print("[INFO] Successfully sent lead to Webhook.")
+    except Exception as e:
+        print(f"[ERROR] Failed to send lead to Webhook: {e}")
+
+# -------------------------
 # Routes
 # -------------------------
 @app.route("/")
@@ -303,21 +327,6 @@ def parse_llm_json_response(llm_output):
     except Exception as e:
         print(f"[WARN] Failed to parse LLM response as JSON: {e}. Output was: {llm_output}")
         
-    # Fallback: regex search for keys
-    reply_match = re.search(r'"reply"\s*:\s*"((?:[^"\\]|\\.)*)"', clean_output)
-    lead_match = re.search(r'"lead_required"\s*:\s*(true|false)', clean_output, re.IGNORECASE)
-    
-    if reply_match:
-        try:
-            reply = reply_match.group(1).encode().decode('unicode-escape')
-        except Exception:
-            reply = reply_match.group(1)
-        lead_required = False
-        if lead_match:
-            lead_required = lead_match.group(1).lower() == 'true'
-        return reply, lead_required
-        
-    # Worst case fallback: treat whole output as reply
     return llm_output, False
 
 @app.route("/ask", methods=["POST"])
@@ -343,8 +352,8 @@ def ask():
     # Get context - SIMPLE, not multiple searches
     try:
         docs = retriever.invoke(question)
-        context = "\n\n".join([doc.page_content for doc in docs[:2]])  # Only 2 docs
-        context = context[:1000]  # Limit context size
+        context = "\n\n".join([doc.page_content for doc in docs])
+        context = context[:4000]  # Limit context size
     except Exception as e:
         context = ""
     
@@ -376,6 +385,8 @@ def ask():
     try:
         # Get LLM response
         raw_answer = llm.invoke(prompt)
+        if hasattr(raw_answer, 'content'):
+            raw_answer = raw_answer.content
         raw_answer = raw_answer.strip()
         
         # Parse JSON response
@@ -512,6 +523,9 @@ Do not include any explanation, markdown wrappers (like ```json), or text outsid
             "transcript": transcript_text
         }
         save_lead_to_json(lead_data)
+        
+        # Fire-and-forget to Webhook
+        threading.Thread(target=send_to_webhook, args=(name, email, phone)).start()
 
         # Clear session
         if session_id in session_interests:
