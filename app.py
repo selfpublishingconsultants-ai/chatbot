@@ -29,7 +29,7 @@ app.secret_key = os.getenv("ADMIN_PASSWORD", "default-secret-key-123456")
 # -------------------------
 # SQLite Database Initialization
 # -------------------------
-DB_PATH = "leads.db"
+DB_PATH = "/tmp/leads.db" if os.environ.get("VERCEL") == "1" else "leads.db"
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -550,7 +550,7 @@ Do not include any explanation, markdown wrappers (like ```json), or text outsid
 
 def save_lead_to_json(lead_data):
     """Save lead data to JSON file"""
-    LEADS_DIR = "leads"
+    LEADS_DIR = "/tmp/leads" if os.environ.get("VERCEL") == "1" else "leads"
     LEADS_JSON = os.path.join(LEADS_DIR, "lead_capture.json")
     os.makedirs(LEADS_DIR, exist_ok=True)
     try:
@@ -578,7 +578,8 @@ def view_leads():
     if not session.get("admin_logged_in"):
         return jsonify({"error": "Unauthorized"}), 401
     
-    LEADS_JSON = os.path.join("leads", "lead_capture.json")
+    LEADS_DIR = "/tmp/leads" if os.environ.get("VERCEL") == "1" else "leads"
+    LEADS_JSON = os.path.join(LEADS_DIR, "lead_capture.json")
     if not os.path.exists(LEADS_JSON):
         return jsonify({"leads": [], "total": 0})
     
