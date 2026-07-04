@@ -3,7 +3,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 from flask import Flask, request, jsonify, send_from_directory, session, redirect, url_for, render_template_string
 from flask_cors import CORS
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain_ollama import OllamaLLM
@@ -54,7 +54,7 @@ init_db()
 # -------------------------
 # Load modular documents and create vectorstore
 # -------------------------
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embeddings = FastEmbedEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 VECTOR_STORE_PATH = "vector_store/self_publishing_consultant_faiss_index"
 SOURCE_DOCS_DIR = "data/source_documents"
