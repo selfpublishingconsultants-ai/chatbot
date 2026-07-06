@@ -538,7 +538,7 @@ Do not include any explanation, markdown wrappers (like ```json), or text outsid
         return jsonify({
             "success": True,
             "message": "Thank you! Your information has been received.",
-            "next_steps": "Our team will contact you within 24 hours."
+            "next_steps": "Our team will contact you in working hours (9am to 5 pm EST)."
         })
 
     except Exception as e:
